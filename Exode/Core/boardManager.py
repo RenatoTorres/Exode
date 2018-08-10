@@ -10,9 +10,7 @@
 import itertools
 import platform
 from serial.tools import list_ports
-if platform.system() == 'Windows':
-    import _winreg as winreg
-else:
+if platform.system() != 'Windows':
     import glob
 
 from .exode import *
@@ -59,9 +57,9 @@ class BoardManager():
         boardList=[]
 
         #  Search a port
-        if platform.system() == 'Windows':
-            ports = windows_ports()
-        elif platform.system() == 'Darwin':
+        # if platform.system() == 'Windows':
+        #     ports = windows_ports()
+        if (platform.system() == 'Windows' ) or (platform.system() == 'Darwin'):
             ports = [i[0] for i in list_ports.comports()]
         else:
             ports = glob.glob("/dev/ttyUSB*") + glob.glob("/dev/ttyACM*")
